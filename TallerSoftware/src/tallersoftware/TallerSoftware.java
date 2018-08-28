@@ -24,6 +24,7 @@ public class TallerSoftware {
         //"meTembloElCora";
         String rol;
         boolean confir = false;
+        boolean existe;
 
         //MiLista.get(0).getClass().equals("Pasajero");
         do {
@@ -35,6 +36,7 @@ public class TallerSoftware {
                             System.exit(0);
                             break;
                         case 1:
+                            existe=false;
                             Usuario usuario = new Conductor(controlador);
                             int entrada1 = Integer.parseInt(JOptionPane.showInputDialog("1. Adicionar \n 2. Modificar \n 3. Consultar \n 0. salir \n\n Canelar para retroceder"));
                             switch (entrada1) {
@@ -50,32 +52,41 @@ public class TallerSoftware {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             System.out.println("a tato le tiembla el cora");
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.Conductor")) {
-                                                JOptionPane.showMessageDialog(null, "Correo ya existente");
-                                            } else {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.adicionar(correo, password);
-                                            }
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Conductor) {
+                                                existe=true;
+                                            } 
                                         }
+                                        if(!existe){
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                                usuario.adicionar(correo, password);
+                                        }
+                                        else {
+                                                JOptionPane.showMessageDialog(null, "Correo ya existente");
+                                            }
                                     }
                                     break;
                                 case 2:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.Conductor")) {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.modificar(correo, password);
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Conductor) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                            usuario.modificar(correo, password);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
                                         }
                                     }
                                     break;
                                 case 3:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
@@ -83,11 +94,14 @@ public class TallerSoftware {
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.Conductor")) {
-                                                JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Conductor) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
                                         }
                                     }
                                     break;
@@ -95,6 +109,7 @@ public class TallerSoftware {
                             break;
                         //
                         case 2:
+                            existe = false;
                             usuario = new Pasajero(controlador);
                             int entrada2 = Integer.parseInt(JOptionPane.showInputDialog("1. Adicionar \n 2. Modificar \n 3. Consultar \n 0. salir \n\n Canelar para retroceder"));
                             switch (entrada2) {
@@ -110,36 +125,41 @@ public class TallerSoftware {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             System.out.println("a tato le tiembla el cora");
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo)) {
-                                                JOptionPane.showMessageDialog(null, "Correo ya existente");
-                                            } else {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.adicionar(correo, password);
-                                                if (usuario.getClass().toString().equals("class tallersoftware.Pasajero")) {
-                                                    rol = "pasajero";
-                                                    System.out.println("A tato le tiembla todo");
-                                                }
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Pasajero) {
+                                                existe = true;
                                             }
+
+                                        }
+                                        if (!existe) {
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                            usuario.adicionar(correo, password);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Correo ya existente");
                                         }
                                     }
                                     break;
                                 case 2:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.Pasajero")) {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.modificar(correo, password);
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Pasajero) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                            usuario.modificar(correo, password);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
                                         }
                                     }
                                     break;
                                 case 3:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
@@ -147,11 +167,14 @@ public class TallerSoftware {
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.Pasajero")) {
-                                                JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof Pasajero) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
                                         }
                                     }
                                     break;
@@ -160,6 +183,7 @@ public class TallerSoftware {
                         //
                         case 3:
                             usuario = new AdapterAdmin(controlador);
+                            existe = false;
                             int entrada3 = Integer.parseInt(JOptionPane.showInputDialog("1. Adicionar \n 2. Modificar \n 3. Consultar \n 0. salir \n\n Canelar para retroceder"));
                             switch (entrada3) {
                                 case 0:
@@ -174,32 +198,40 @@ public class TallerSoftware {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             System.out.println("a tato le tiembla el cora");
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo)) {
-                                                JOptionPane.showMessageDialog(null, "Correo ya existente");
-                                            } else {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.adicionar(correo, password);
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof AdapterAdmin) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (!existe) {
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                            usuario.adicionar(correo, password);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Correo ya existente");
                                         }
                                     }
                                     break;
                                 case 2:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.AdapterAdmin")) {
-                                                password = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                                                usuario.modificar(correo, password);
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof AdapterAdmin) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            password = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                                            usuario.modificar(correo, password);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
                                         }
                                     }
                                     break;
                                 case 3:
+                                    existe = false;
                                     correo = JOptionPane.showInputDialog("Ingrese el correo:");
                                     if (MiLista.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "No hay cuentas registradas");
@@ -207,11 +239,16 @@ public class TallerSoftware {
                                     } else {
                                         for (int i = 0; i < MiLista.size(); i++) {
                                             Usuario us = MiLista.get(i);
-                                            if (us.Correo.equalsIgnoreCase(correo) && us.getClass().toString().equals("class tallersoftware.AdapterAdmin")) {
-                                                JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+                                            if (us.Correo.equalsIgnoreCase(correo) && us instanceof AdapterAdmin) {
+                                                existe = true;
                                             }
+                                        }
+                                        if (existe) {
+                                            JOptionPane.showMessageDialog(null, "La contraseña es: " + usuario.consultar(correo));
+
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Esta cuenta no existe");
+
                                         }
                                     }
                                     break;
